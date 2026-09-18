@@ -1,12 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using UserBase.Database;
 using UserBase.Database.Context;
 using UserBase.Database.LocalFileCreator;
 using UserBase.Database.RemoteConnectionHandler;
-using UserBase.Logging;
 using UserBase.Service;
 
 namespace UserBase
@@ -23,9 +21,6 @@ namespace UserBase
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             var builder = Host.CreateApplicationBuilder();
-
-            builder.Logging.AddDebug();
-            builder.Logging.AddProvider(new FileLoggerProvider(FileLoggerProvider.DefaultDirectory));
 
             builder.Services.AddKeyedSingleton<IDatabaseCreator, AccessDatabaseCreator>(DbProvider.Access);
             builder.Services.AddKeyedSingleton<IDatabaseCreator, SqliteDatabaseCreator>(DbProvider.Sqlite);
